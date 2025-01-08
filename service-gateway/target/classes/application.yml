@@ -1,0 +1,28 @@
+server:
+  port: 8888
+
+spring:
+  application:
+    name: Gateway
+  cloud:
+    gateway:
+      routes:
+        - id: service-client
+          uri: lb://SERVICE-CLIENT
+          predicates:
+            - Path=/clients/**
+        - id: service-car
+          uri: lb://SERVICE-CAR
+          predicates:
+            - Path=/cars/**
+    discovery:
+      locator:
+        enabled: true
+        lower-case-service-id: true
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    hostname: localhost
